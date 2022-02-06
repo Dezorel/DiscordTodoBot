@@ -9,10 +9,9 @@ import net.dv8tion.jda.api.JDABuilder;
 import java.util.concurrent.TimeUnit;
 
 
-public class App
+public class App extends Token
 {
     public static void main(String[] args) throws Exception{
-        
 
         JDA jda = JDABuilder.createDefault(token).build();
 
