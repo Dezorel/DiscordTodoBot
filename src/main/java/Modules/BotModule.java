@@ -19,11 +19,13 @@ public class BotModule extends Token
         this.jda = JDABuilder.createDefault(token).build();
         this.jda.getPresence().setStatus(OnlineStatus.ONLINE);
         this.jda.getPresence().setActivity(Activity.watching(BotConfig.whatWatchingBot));
+
+        this.jda.addEventListener(new Commands());
     }
 
     public void sendMessage (String msg) throws Exception
     {
-        this.jda.awaitReady().getCategories().get(0).getTextChannels().get(0).sendMessage(msg)
+        this.jda.awaitReady().getCategories().get(0).getTextChannels().get(1).sendMessage(msg)
                 .timeout(5, TimeUnit.SECONDS)
                 .submit();
     }

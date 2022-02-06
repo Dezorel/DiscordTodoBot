@@ -2,7 +2,8 @@ package Config;
 
 public class BotConfig
 {
-    static public String whatWatchingBot = "How to do discrod java bot?";
+    static public String prefixCommand = "/";
 
+    static public String whatWatchingBot = "How to do discrod java bot?";
 
 }
