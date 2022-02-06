@@ -4,7 +4,7 @@
  */
 
 import Controllers.BotController;
-import Modules.Token;
+import Config.Token;
 
 
 public class App extends Token
