@@ -18,8 +18,9 @@ public class Commands extends ListenerAdapter
             EmbedBuilder info = new EmbedBuilder();
             info.setTitle(":information_source:  Information");
             info.setDescription("This is info message");
-            info.addField("Creator", "test", false);
+            info.addField("Creator", "Dezorel", false);
             info.setColor(0xf45642);
+            info.setFooter("This message created", event.getMember().getUser().getAvatarUrl());
 
             event.getChannel().sendTyping().queue();
             //event.getChannel().sendMessage("This is info message").queue();
