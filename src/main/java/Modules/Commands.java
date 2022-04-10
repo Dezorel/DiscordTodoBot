@@ -227,8 +227,69 @@ public class Commands extends ListenerAdapter
                 }
 
             }
+            else
+            {
+                try {
+                    sendMessage(event.getAuthor().getName() + ", ты указал всего лишь один параметр, из двух необходимых, пожалуйста повтори запрос с параметрами ID_Задания Время_Окончания");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
+        if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + "change_task_start_date"))
+        {
+            if (args.length > 2)
+            {
+                String idTask = args[1];
+                String startDate = args[2];
+
+                UserModel userModel = new UserModel(event.getChannel().getId(), event.getAuthor().getId());
+
+               try {
+                   switch (userModel.addTaskStartTime(idTask, startDate, event.getAuthor().getId()))
+                   {
+                       case 0:
+                           sendMessage(event.getAuthor().getName() + ", к сожалению ты не владелец данной задачи, обратись к владельцу что бы изменить время");
+                           break;
+
+                       case 1:
+                           sendMessage("Время для задачи #" + idTask + " было успешно обновлено!");
+                           break;
+
+                       case 2:
+                           sendMessage(event.getAuthor().getName() + ", ты ошибся, я не смог найти задачу #" + idTask + ", исправь данные и попробуй снова");
+                           break;
+
+                       default:
+                           sendMessage("Упс... Что-то пошло не так...");
+                           break;
+                   }
+               }
+               catch (Exception e)
+               {
+                   e.printStackTrace();
+               }
+
+            }
+            else if (args.length > 1)
+            {
+                try {
+                    sendMessage(event.getAuthor().getName() + ", ты указал всего лишь один параметр, из двух необходимых, пожалуйста повтори запрос с параметрами ID_Задания Время_Окончания");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                System.out.println("Params task not exitst");
+                try {
+                    sendMessage(event.getAuthor().getName() + ", ты не указал ни одного параметра, пожалуйста повтори запрос с параметрами ID_Задания Время_Окончания");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 
         if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + ""))
