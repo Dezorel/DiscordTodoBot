@@ -15,7 +15,7 @@ public class App extends Token
 
         try
         {
-            bot.runAndSendHi();
+            bot.run();
         }
         catch (Exception e)
         {

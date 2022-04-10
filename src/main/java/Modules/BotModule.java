@@ -7,11 +7,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 
-import java.util.concurrent.TimeUnit;
-
 public class BotModule extends Token
 {
-
     private JDA jda;
 
     public BotModule() throws Exception

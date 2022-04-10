@@ -4,7 +4,7 @@ import Modules.BotModule;
 
 public class BotController
 {
-    public void runAndSendHi() throws Exception
+    public void run() throws Exception
     {
         BotModule bot = new BotModule();
 
