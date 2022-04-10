@@ -332,7 +332,8 @@ public class DBModule
 
             while(rs.next())
             {
-                task += "\uD83D\uDC64 [Автор](tg://user?id=" + rs.getString("user_id") + ")\n";
+                //task += "\uD83D\uDC64 [Автор](tg://user?id=" + rs.getString("user_id") + ")\n";
+                task += "\uD83D\uDC64 Автор: <@" + rs.getString("user_id") + ">\n";
                 task += "❗ Задача #" + taskId + ": " + rs.getString("task_text") + "\n";
                 task += "⏱ Крайний срок: ";
 
