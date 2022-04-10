@@ -71,7 +71,7 @@ public class UserModel
         DBModule db = new DBModule();
         int idTask;
 
-        String query = "INSERT INTO tasks (`user_id`, `chat_id`, `task_text`) VALUES ('" + this.user_id + "','" + this.chatId + "','" + text + "')";
+        String query = "INSERT INTO tasks (`user_id`, `chat_id`, `task_text`, `start_date`) VALUES ('" + this.user_id + "','" + this.chatId + "','" + text + "', NOW())";
 
         db.connection();
         db.queryInsert(query);

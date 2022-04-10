@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -104,7 +106,6 @@ public class Commands extends ListenerAdapter
                 int idTask;
                 String[] textArray = Arrays.copyOfRange(args, 1, args.length);
                 String taskText =  String.join(" ", textArray);
-                String stopDate = "";
 
                 UserModel userModel = new UserModel(event.getChannel().getId(), event.getAuthor().getId());
 
@@ -291,10 +292,47 @@ public class Commands extends ListenerAdapter
             }
         }
 
-
-        if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + ""))
+        if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + "start_get_tasks"))
         {
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run() {
+                    UserModel userModel = new UserModel(event.getChannel().getId(), event.getAuthor().getId());
+                    while (true)
+                    {
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                        LocalDateTime now = LocalDateTime.now();
+                        int hour = LocalDateTime.now().getHour();
+                        try {
 
+                            if(dtf.format(now).equals("10:00"))
+                            {
+                                DBModule db = new DBModule();
+                                db.connection();
+                                db.automaticallyCloseTask();        //close task what need ot close
+                                db.close();
+
+                                try {
+                                    sendMessage(userModel.getTasksToday(event.getChannel().getId()));
+                                    Thread.sleep(1000);
+                                    sendMessage(userModel.getTasksSoon(event.getChannel().getId()));
+                                    Thread.sleep(1000);
+                                    sendMessage(userModel.getTaskClose(event.getChannel().getId(), hour));
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            Thread.sleep(60000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
         }
     }
 
