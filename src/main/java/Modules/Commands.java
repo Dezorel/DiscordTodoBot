@@ -193,6 +193,41 @@ public class Commands extends ListenerAdapter
 
         }
 
+        if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + "close_task"))
+        {
+            if (args.length > 1)
+            {
+                String idTask = args[1];
+
+                UserModel userModel = new UserModel(event.getChannel().getId(), event.getAuthor().getId());
+
+                try {
+                    switch (userModel.closeTask(idTask, event.getAuthor().getId()))
+                    {
+                        case 0:
+                            sendMessage(event.getAuthor().getName() + ", к сожалению ты не владелец данной задачи, обратись к владельцу что бы закрыть задачу");
+                            break;
+
+                        case 1:
+                            sendMessage("Задача #" + idTask + " была успешно закрыта!");
+                            break;
+
+                        case 2:
+                            sendMessage(event.getAuthor().getName() + ", ты ошибся, я не смог найти задачу #" + idTask + ", исправь данные и попробуй снова");
+                            break;
+
+                        default:
+                            sendMessage("Упс... Что-то пошло не так...");
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        }
 
 
 
