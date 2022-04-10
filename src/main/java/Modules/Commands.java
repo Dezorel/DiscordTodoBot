@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class Commands extends ListenerAdapter
@@ -82,23 +83,53 @@ public class Commands extends ListenerAdapter
                 }
                 catch (Exception e)
                 {
-                    System.out.println("Ooops! Send sms failed");
+                    e.printStackTrace();
                 }
             }
             else
             {
                 try
                 {
-                    sendMessage( "Упс... Что-то пошло не так...");
+                    sendMessage( "Ты указал неверное количество параметров, из трёх необходимых, пожалуйста повтори запрос с параметрами ID_Задания Дата_Окончания Время_Окончания");
                 } catch (Exception e) {
-                    System.out.println("Ooops! Send sms failed");
+                    e.printStackTrace();
                 }
             }
         }
 
+        if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + "add_task"))
+        {
+            if (args.length > 1)
+            {
+                int idTask;
+                String[] textArray = Arrays.copyOfRange(args, 1, args.length);
+                String taskText =  String.join(" ", textArray);
+                String stopDate = "";
 
+                UserModel userModel = new UserModel(event.getChannel().getId(), event.getAuthor().getId());
 
+                idTask = userModel.addTask(taskText);
 
+                System.out.println( event.getAuthor().getId() + " user generate task with text: " + taskText);
+
+                try {
+                    sendMessage(event.getAuthor().getName() + ", таск был успешно создан под id: #" + idTask);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else
+            {
+                System.out.println("Params task not exitst");
+                try {
+                    sendMessage( event.getAuthor().getName()  + ", ты не указал ни одного параметра, пожалуйста повтори запрос с параметром Текст_Задания");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
 
 
