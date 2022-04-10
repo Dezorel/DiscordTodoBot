@@ -361,7 +361,7 @@ public class DBModule
         return task;
     }
 
-    public boolean addUserToCompleteTask(String taskId, int user_id)
+    public boolean addUserToCompleteTask(String taskId, String user_id)
     {
         String query = "INSERT INTO `users_complete_task` (`id_task` , `user_id`) VALUES ( " + taskId + ", '" + user_id + "')";
 
@@ -390,7 +390,7 @@ public class DBModule
             while(rs.next())
             {
                 count ++;
-                answer += "[\uD83D\uDC64](tg://user?id=" + rs.getString("user_id") + ")  ";
+                answer += "[\uD83D\uDC64]<@" + rs.getString("user_id") + ">  ";
             }
         } catch (SQLException e) {
             e.printStackTrace();

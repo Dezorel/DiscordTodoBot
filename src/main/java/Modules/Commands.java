@@ -334,6 +334,42 @@ public class Commands extends ListenerAdapter
                 }
             }).start();
         }
+
+        if (args[0].equalsIgnoreCase(BotConfig.prefixCommand + "complete_task"))
+        {
+            if (args.length > 1)
+            {
+                String idTask = args[1];
+
+                DBModule db = new DBModule();
+                db.connection();
+                try
+                {
+                    if (db.addUserToCompleteTask(idTask, event.getAuthor().getId()))
+                    {
+                        sendMessage(event.getAuthor().getName() + ", данный таск успешно добавлен в выполненные!");
+                    }
+                    else
+                    {
+                        sendMessage("Упс... Что-то пошло не так. Попробуй позже");
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                db.close();
+            }
+            else
+            {
+                try {
+                    sendMessage(event.getAuthor().getName() + ", ты указал ни одного параметра, пожалуйста повтори запрос с параметрами ID_Задания");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void sendMessage (String msg) throws Exception
